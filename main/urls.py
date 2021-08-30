@@ -16,14 +16,23 @@ Including another URLconf
 from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 from django.contrib.staticfiles.urls import static
+from django.conf import settings
 from manga.views import *
+
+
+
+
+router = DefaultRouter()
+router.register('manga', MangaView)
+router.register('chapter', ChapterView)
+router.register('pages', PageView)
+router.register('comments', CommentsView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include('account.urls')),
-    path('api/v1/manga/', MangaView.as_view({'get': 'retrieve,', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy' })),
-    path('api/v1chapter/', ChapterView.as_view({'get': 'retrieve,', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy' })),
-    path('api/v1comment/', CommentsView.as_view({'get': 'retrieve,', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy' })),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('api/v1/', include(router.urls)),
+   ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

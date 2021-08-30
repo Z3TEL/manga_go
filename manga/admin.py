@@ -18,3 +18,4 @@ admin.site.register(Chapter, FeedAdmin)
 admin.site.register(Manga)
 admin.site.register(Comment)
 admin.site.register(PageFile)
+

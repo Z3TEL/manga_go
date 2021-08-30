@@ -27,7 +27,6 @@ class PageView(viewsets.ModelViewSet):
     queryset = PageFile.objects.all()
     serializer_class = PageSerializer
 
-from .models import *
 from .forms import *
 def create_to_feed(request):
     user = request.user

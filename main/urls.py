@@ -13,15 +13,17 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
 from django.contrib import admin
-from django.urls import path
-
+from django.urls import path, include
+from django.contrib.staticfiles.urls import static
 from manga.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('manga/', MangaView.as_view({'get': 'retrieve,', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy' })),
-    path('chapter', ChapterView.as_view({'get': 'retrieve,', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy' })),
-    path('comment', CommentsView.as_view({'get': 'retrieve,', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy' })),
-]
+    path('api/v1/', include('account.urls')),
+    path('api/v1/manga/', MangaView.as_view({'get': 'retrieve,', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy' })),
+    path('api/v1chapter/', ChapterView.as_view({'get': 'retrieve,', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy' })),
+    path('api/v1comment/', CommentsView.as_view({'get': 'retrieve,', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy' })),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

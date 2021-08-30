@@ -5,4 +5,3 @@ Pillow
 django-filter
 python-decouple
 drf-yasg
-python-decouple

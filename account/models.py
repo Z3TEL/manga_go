@@ -20,7 +20,8 @@ class UserManager(BaseUserManager):
 
     def create_superuser(self, email, password, **extra_fields):
         extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_active', True)
+        extra_fields.setdefault('is_active', True
+        print('hell')
         return self._create(email, password, **extra_fields)
 
 

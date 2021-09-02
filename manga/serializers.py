@@ -28,3 +28,13 @@ class PageSerializer(serializers.ModelSerializer):
         model = PageFile
         fields = ('Which_Chapter', 'file')
 
+class BookMarkSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BookMark
+        fields = '__all__'
+class RatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Rating
+        fields = '__all__'
+
+

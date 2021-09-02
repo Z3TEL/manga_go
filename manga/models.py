@@ -18,15 +18,23 @@ def validate_rating(rating):
 
 
 class Manga(models.Model):
+    Genre_Choices = (
+        ('Horror', 'Ужастик'),
+        ('Comedy', 'Комедия'),
+        ('Triller', 'Триллер'),
+        ('Senen', 'Сёнен'),
+        ('Sedze', 'Сёдзе'),
+        ('Seinen', 'Сейнен'),
+    )
     title = models.CharField(max_length=65, unique=True)
     description = models.TextField()
-    rating = models.SmallIntegerField(default=0, validators=[validate_rating])
     image = models.ImageField(upload_to='manga_covers', blank=True, null=True)
     author = models.CharField(max_length=65)
     artist = models.CharField(max_length=65)
+    genre = models.CharField(max_length=60, choices=Genre_Choices)
 
-
-
+    def str(self):
+        return self.title
 
 
 
@@ -53,4 +61,26 @@ class Comment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 
+class BookMark(models.Model):
+    Going = (
+        ('All', 'Все'),
+        ('Reading', 'Читаю'),
+        ('In the plans', 'В планах'),
+        ('Readed', 'Прочитано'),
+        ('Favorites', 'Любимые'),
+        ('End', 'Закончил')
+    )
+    manga = models.ForeignKey(Manga, on_delete=models.CASCADE, related_name='favorites')
+    user = models.ForeignKey(User,
+                               on_delete=models.CASCADE,
+                               related_name='Who_is')
+    add_to_favorites = models.CharField(max_length=40, choices=Going)
+
+
+class Rating(models.Model):
+    manga = models.ForeignKey(Manga, on_delete=models.CASCADE, related_name='rating_manga')
+    user = models.ForeignKey(User,
+                             on_delete=models.CASCADE,
+                             related_name='author')
+    rating = models.SmallIntegerField(default=0, validators=[validate_rating])
 

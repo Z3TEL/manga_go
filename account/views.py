@@ -65,3 +65,4 @@ class ForgotPasswordCompleteView(APIView):
         if serializer.is_valid(raise_exception=True):
             serializer.set_new_password()
             return Response('Пароль успешно обновлён')
+

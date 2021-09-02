@@ -9,13 +9,9 @@ from .permissions import *
 
 
 class MangaFilter(filters.FilterSet):
-    rating_from = filters.NumberFilter('rating', 'gte')
-    rating_to = filters.NumberFilter('rating', 'lte')
-
     class Meta:
         model = Manga
-        fields = ('rating_from', 'rating_to')
-
+        fields = ('genre', )
 
 from rest_framework import filters
 
@@ -40,8 +36,9 @@ class MangaView(viewsets.ModelViewSet):
 class ChapterView(viewsets.ModelViewSet):
     queryset = Chapter.objects.all()
     serializer_class = ChapterSerializer
+
     def get_permissions(self):
-        if self.action in ['create', 'update', 'partial_update', 'destroy']:
+        if self.action in ['create', 'update', 'partial_update', 'destroy', 'likes']:
             return [IsAdminUser()]
         return []
 
@@ -92,6 +89,27 @@ def create_to_pages(request):
 
 
 
+
+
+
+class BookMarkViewSet(viewsets.ModelViewSet):
+    queryset = BookMark.objects.all()
+    serializer_class = BookMarkSerializer
+
+    def get_permissions(self):
+        if self.action in ['create', 'update', 'partial_update', 'destroy']:
+            return [IsAuthorOrIsAdmin(), IsAuthenticated()]
+        return []
+
+class RatingView(viewsets.ModelViewSet):
+    queryset = Rating.objects.all()
+    serializer_class = RatingSerializer
+
+
+    def get_permissions(self):
+        if self.action in ['create', 'update', 'partial_update', 'destroy']:
+            return [IsAuthorOrIsAdmin(), IsAuthenticated()]
+        return []
 
 
 

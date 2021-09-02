@@ -91,7 +91,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': config('DB_NAME'),
         'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
+        'PASSWORD': '',
         'HOST': config('DB_HOST'),
         'PORT': config('DB_PORT', cast=int),
 
@@ -178,5 +178,5 @@ AUTHENTICATION_BACKENDS = [
 SOCIAL_AUTH_VK_OAUTH2_KEY = '7939600'
 SOCIAL_AUTH_VK_OAUTH2_SECRET = 'ZxN3QHgOwR6F53Uz0bLn '
 
-
-
+APPEND_SLASH = False
+SITE_ID=1

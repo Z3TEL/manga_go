@@ -1,8 +1,9 @@
 from django_filters import rest_framework as rest_filters, NumberFilter, CharFilter
-from requests import Response
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.permissions import *
+from rest_framework.response import Response
+
 from .serializers import *
 from django_filters import rest_framework as filters
 from .permissions import *
@@ -23,14 +24,32 @@ class MangaView(viewsets.ModelViewSet):
     filterset_class = MangaFilter
     search_fields = ['title']
 
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return MangaSerializer
+        return super().get_serializer_class()
 
     def get_permissions(self):
-        if self.action in ['create', 'update', 'partial_update', 'destroy']:
+        if self.action in ['create', 'update', 'partial_update', 'destroy', 'like']:
             return [IsAdminUser()]
+        elif self.action in ['like']:
+            return [IsAuthenticated()]
+        return []
         return []
 
-
-
+    @action(detail=True, methods=['post'])
+    def like(self, request, pk):
+        manga = self.get_object()
+        user = request.user
+        like_obj, created = Like.objects.get_or_create(manga=manga, user=user)
+        if like_obj.is_liked:
+            like_obj.is_liked = False
+            like_obj.save()
+            return Response('disliked')
+        else:
+            like_obj.is_liked = True
+            like_obj.save()
+            return Response('liked')
 
 
 class ChapterView(viewsets.ModelViewSet):

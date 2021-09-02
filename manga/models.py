@@ -4,7 +4,7 @@ from django.db import models
 
 
 User = get_user_model()
-# RATING_CHOC
+
 
 def validate_rating(rating):
     if rating < 0:
@@ -84,3 +84,8 @@ class Rating(models.Model):
                              related_name='author')
     rating = models.SmallIntegerField(default=0, validators=[validate_rating])
 
+
+class Like(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='likes')
+    manga = models.ForeignKey(Manga, on_delete=models.CASCADE)
+    is_liked = models.BooleanField(default=False)

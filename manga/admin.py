@@ -13,10 +13,11 @@ class FeedAdmin(admin.ModelAdmin):
         FeedFileInline,
     ]
 
+
 admin.site.register(BookMark)
 admin.site.register(Chapter, FeedAdmin)
 admin.site.register(Manga)
 admin.site.register(Comment)
 admin.site.register(PageFile)
 admin.site.register(Rating)
-
+admin.site.register(Like)

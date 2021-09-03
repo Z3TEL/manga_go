@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'oauth2_provider',
     'social_django',
     'rest_framework_social_oauth2',
+    'django_celery_results',
+    # 'django_celery_beat',
 
 ]
 MIDDLEWARE = [
@@ -180,3 +182,4 @@ SOCIAL_AUTH_VK_OAUTH2_SECRET = 'ZxN3QHgOwR6F53Uz0bLn '
 
 APPEND_SLASH = False
 SITE_ID=1
+

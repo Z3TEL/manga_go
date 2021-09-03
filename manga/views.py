@@ -131,4 +131,6 @@ class RatingView(viewsets.ModelViewSet):
         return []
 
 
-
+class LikeViewSet(viewsets.ModelViewSet):
+    queryset = Like.objects.all()
+    serializer_class = LikeSerializer

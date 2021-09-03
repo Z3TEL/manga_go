@@ -34,7 +34,7 @@ router.register('pages', PageView)
 router.register('comments', CommentsView)
 router.register('bookmark', BookMarkViewSet)
 router.register('rating', RatingView)
-
+router.register('likes', LikeViewSet)
 
 
 
